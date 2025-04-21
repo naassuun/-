@@ -1,0 +1,23 @@
+import streamlit as st
+import openpyxl
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+db = pd.read_excel('books_data.xlsx')
+st.write(db)
+
+x = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+y = [9700, 19100, 13500, 19500, 9700, 13700, 19725, 148400, 134716, 273017, 111000]
+plt.bar(x, y, label='Кол-во книг')
+plt.xlabel('Год')
+plt.ylabel('Кол-во книг')
+plt.title('Публикации художественной китайской литературы в России 2015-2025 гг.')
+plt.legend()
+st.pyplot(plt.gcf())
+
+options = st.multiselect('Книги какого года вас интересуют?', db['Год издания'].unique())
+st.write('Вы выбрали: ', options)
+new_db = db[(db['Год издания'].isin(options))]
+st.write(new_db)
+
